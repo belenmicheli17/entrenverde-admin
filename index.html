@@ -229,6 +229,143 @@
 
   .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--texto); color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 14px; max-width: calc(100% - 32px); box-shadow: 0 8px 24px rgba(0,0,0,.2); z-index: 20; }
 
+
+  /* ─── Pedidos ─── */
+  .nav-cont { margin-left: auto; font-size: 12px; background: var(--mostaza); color: var(--texto); border-radius: 10px; padding: 1px 8px; font-weight: 700; }
+  .btn-nuevo-ped { background: var(--mostaza); color: var(--texto); }
+  .btn-nuevo-ped:hover { background: var(--mostaza-hover); }
+  .pd-barra { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; }
+  .pd-toggle { position: relative; display: flex; width: 460px; max-width: 100%; border: 2px solid var(--verde); border-radius: 14px; }
+  .pd-toggle button { flex: 1; height: 48px; border: 0; background: var(--crema-card); font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--texto); }
+  .pd-toggle button:first-child { border-radius: 12px 0 0 12px; }
+  .pd-toggle button:last-child { border-radius: 0 12px 12px 0; }
+  .pd-toggle button[aria-pressed="true"] { background: var(--verde); color: #fff; }
+  .pd-cont { font-size: 13px; border-radius: 10px; padding: 2px 9px; background: var(--verde-claro); color: var(--verde); }
+  .pd-toggle [aria-pressed="true"] .pd-cont { background: var(--mostaza); color: var(--texto); }
+  .pd-toggle .pulso { animation: pulso 1.3s ease-out; }
+  @keyframes pulso { 0% { box-shadow: 0 0 0 0 rgba(201,168,76,.95); } 100% { box-shadow: 0 0 0 16px rgba(201,168,76,0); } }
+  .mas-uno { position: absolute; right: -10px; top: -16px; background: var(--mostaza); color: var(--texto); font-weight: 800; font-size: 14px; border-radius: 14px; padding: 3px 10px; box-shadow: 0 3px 8px rgba(0,0,0,.25); pointer-events: none; animation: subir 1.5s ease-out forwards; }
+  @keyframes subir { 0% { opacity: 0; transform: translateY(10px) scale(.8); } 20% { opacity: 1; transform: none; } 75% { opacity: 1; } 100% { opacity: 0; transform: translateY(-12px); } }
+  .pd-chips .chip-f { height: 44px; }
+
+  .pd-tabla { background: var(--crema-card); border: 1px solid var(--borde); border-radius: 14px; overflow: hidden; }
+  .pd-dia { background: #EFE9DD; padding: 11px 24px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; border-bottom: 1px solid var(--borde-suave); }
+  .pd-dia.atrasado { background: #F6EBCB; }
+  .pd-dia-t { font-family: var(--serif); font-size: 20px; font-weight: 600; }
+  .pd-dia.atrasado .pd-dia-t { color: #7A5A00; }
+  .pd-dia-s { font-size: 13px; color: var(--texto-suave); }
+  .pd-fila { display: grid; grid-template-columns: 120px minmax(0, 1fr) 110px 190px 210px; grid-template-areas: "cab items total pago acc"; gap: 22px; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--borde-suave); transition: background .3s; }
+  .pd-tabla .pd-fila:last-child { border-bottom: 0; }
+  .pd-fila.hecho { background: #EDF6F0; }
+  .pd-fila.borrada { opacity: .8; }
+  .pd-fila.borrada .pd-nombre { text-decoration: line-through; }
+  .pd-cab { grid-area: cab; min-width: 0; }
+  .pd-items { grid-area: items; min-width: 0; }
+  .pd-total { grid-area: total; text-align: right; font-family: var(--serif); font-size: 22px; font-weight: 600; }
+  .pd-pago { grid-area: pago; }
+  .pd-acc { grid-area: acc; display: flex; flex-direction: column; gap: 8px; }
+  .pd-num { font-family: var(--serif); font-size: 34px; font-weight: 700; color: var(--verde); line-height: 1; }
+  .pd-nombre { font-weight: 600; font-size: 15px; margin-top: 6px; overflow-wrap: anywhere; }
+  .pd-hora { font-size: 12px; color: var(--texto-suave); }
+  .pd-items > div { font-size: 14.5px; padding: 2px 0; line-height: 1.35; }
+  .pd-items .v { color: var(--texto-suave); }
+  .pd-items .pd-entrega { font-size: 12.5px; color: var(--texto-suave); margin-top: 4px; }
+  .pago { width: 100%; border: 0; border-radius: 10px; padding: 9px 12px; text-align: center; transition: filter .15s; }
+  .pago:hover { filter: brightness(.97); }
+  .pago b { display: block; font-size: 16px; }
+  .pago small { display: block; font-size: 11.5px; font-weight: 500; margin-top: 2px; }
+  .pago.sin { background: #FBECE9; color: var(--rojo); }
+  .pago.si { background: var(--verde-claro); color: var(--verde); }
+  .pago.efe { background: #F6EBCB; color: #7A5A00; }
+  .pago:disabled { opacity: .6; cursor: wait; }
+  .btn-conf { width: 100%; height: 42px; border-radius: 10px; border: 1.5px solid var(--verde-medio); background: #fff; color: var(--verde); font-size: 14.5px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background .25s, color .25s; }
+  .btn-conf:hover { background: var(--verde-claro); }
+  .btn-conf.ok, .btn-conf.ok:hover { background: var(--verde-medio); color: #fff; }
+  .pd-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 20px; }
+  .lnk { background: none; border: 0; padding: 6px 2px; font-size: 13px; font-weight: 500; color: var(--texto-suave); text-decoration: underline; text-underline-offset: 2px; min-height: 32px; }
+  .lnk:hover { color: var(--texto); }
+  .lnk.rojo { color: #A9645C; }
+  .etq { display: inline-block; font-size: 12px; font-weight: 600; border-radius: 6px; padding: 3px 8px; margin: 6px 6px 0 0; line-height: 1.35; }
+  .etq.nota { background: var(--verde-claro); color: var(--verde); }
+  .etq.ayer { background: #F6EBCB; color: #7A5A00; }
+  .etq.cambio { background: #FBECE9; color: var(--rojo); }
+  .etq.gris { background: #ECE8DF; color: var(--texto-suave); }
+
+  .pd-grilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; align-items: start; }
+  .pd-grilla .pd-dia { grid-column: 1 / -1; background: none; padding: 6px 0 8px; border-bottom: 2px solid var(--borde); }
+  .pd-grilla .pd-dia.atrasado { border-bottom-color: var(--mostaza); }
+  .pd-grilla .pd-dia-t { font-size: 23px; }
+  .pc-card { background: var(--crema-card); border: 1px solid var(--borde); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .pc-cab { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .pc-card .pd-num { font-size: 38px; }
+  .pc-card .pd-nombre { font-size: 17px; }
+  .pc-card .pd-hora { padding-top: 6px; white-space: nowrap; }
+  .pc-items { display: flex; flex-direction: column; gap: 8px; }
+  .pc-item { display: flex; gap: 12px; align-items: center; }
+  .pc-q { flex: none; width: 44px; height: 44px; border-radius: 10px; background: var(--verde-claro); color: var(--verde); font-weight: 700; font-size: 19px; display: flex; align-items: center; justify-content: center; }
+  .pc-n { font-size: 16px; font-weight: 500; line-height: 1.25; overflow-wrap: anywhere; }
+  .pc-n span { color: var(--texto-suave); font-weight: 400; }
+  .pc-entrega { font-size: 14px; color: var(--texto-suave); border-top: 1px solid var(--borde-suave); padding-top: 10px; }
+  .pc-gestion { display: flex; align-items: center; gap: 12px; }
+  .pc-gestion .pd-total { text-align: left; font-size: 20px; white-space: nowrap; }
+  .pc-gestion .pago { padding: 6px 10px; }
+  .pc-gestion .pago b { font-size: 14px; }
+  .btn-armado { height: 60px; border-radius: 14px; display: flex; align-items: center; justify-content: center; gap: 14px; padding: 0 16px; font-size: 18px; font-weight: 600; border: 2px solid #B9B3A7; background: #fff; color: var(--texto); transition: background .2s, border-color .2s, color .2s; }
+  .btn-armado:hover { border-color: var(--verde-medio); }
+  .circ { flex: none; width: 32px; height: 32px; border-radius: 50%; border: 2px solid #B9B3A7; display: flex; align-items: center; justify-content: center; font-size: 19px; font-weight: 700; color: #fff; transition: background .2s, border-color .2s; }
+  .btn-armado.ok { border-color: var(--verde-medio); background: var(--verde-claro); color: var(--verde); }
+  .btn-armado.ok .circ { background: var(--verde-medio); border-color: var(--verde-medio); }
+  .pc-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 0 18px; margin-top: -4px; }
+  .armados-t { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 10px; margin-top: 12px; }
+  .armados-t b { font-size: 14px; color: var(--texto-suave); }
+  .armados-t span { font-size: 12.5px; color: var(--texto-suave); }
+  .plegados { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; }
+  .plegado { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 6px 12px; background: #ECE8DF; border-radius: 12px; color: var(--texto-suave); border: 0; width: 100%; text-align: left; }
+  .plegado:hover { background: #E4DFD3; }
+  .plegado .circ { width: 26px; height: 26px; font-size: 15px; background: var(--verde-medio); border-color: var(--verde-medio); }
+  .plegado .pl-num { font-family: var(--serif); font-size: 18px; font-weight: 700; }
+  .plegado .pl-n { flex: 1; font-size: 14px; font-weight: 500; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .plegado .pl-c { font-size: 12.5px; white-space: nowrap; }
+  .pd-vacio { background: var(--crema-card); border: 1px solid var(--borde); border-radius: 14px; padding: 40px 20px; text-align: center; color: var(--texto-suave); line-height: 1.6; grid-column: 1 / -1; }
+
+  /* Ventana de pedido */
+  dialog.dlg-pedido { max-width: 820px; max-height: calc(100vh - 32px); overflow: auto; }
+  .dp-cab { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .dp-cab h2 span { color: var(--verde); }
+  .dp-aviso { background: #FFF6DE; border: 1px solid var(--mostaza); border-radius: 10px; padding: 10px 14px; font-size: 13.5px; line-height: 1.45; }
+  .dp-campos { display: flex; flex-wrap: wrap; gap: 14px; }
+  .dp-campos .campo { flex: 1 1 200px; }
+  .dp-campos .input, .dlg-pedido .dp-nota .input { height: 46px; font-size: 15px; background: #fff; }
+  .dp-checks { display: flex; flex-wrap: wrap; gap: 6px 28px; }
+  .dp-checks label { display: flex; align-items: center; gap: 10px; min-height: 40px; font-size: 14.5px; cursor: pointer; }
+  .dp-it { display: grid; grid-template-columns: minmax(0, 1fr) auto 100px auto; gap: 14px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--borde-suave); }
+  .dp-it-n { font-weight: 600; font-size: 15px; overflow-wrap: anywhere; }
+  .dp-it-v { font-size: 13px; color: var(--texto-suave); }
+  .dp-cant { display: flex; align-items: center; gap: 2px; }
+  .dp-cant button { width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--borde); background: #fff; font-size: 22px; line-height: 1; }
+  .dp-cant button:hover { border-color: var(--verde); }
+  .dp-cant span { width: 40px; text-align: center; font-size: 18px; font-weight: 700; }
+  .dp-it-p { text-align: right; font-weight: 600; }
+  .dp-quitar { border: 0; background: transparent; color: var(--rojo); font-size: 14px; font-weight: 600; text-decoration: underline; padding: 8px 4px; }
+  .dp-vacio { padding: 14px 0; font-size: 14px; color: var(--texto-suave); }
+  .dp-buscar .input { width: 100%; height: 48px; border: 2px solid var(--verde-medio); background: #fff; font-size: 15px; }
+  .dp-res { margin-top: 6px; background: #fff; border: 1px solid var(--borde); border-radius: 10px; overflow: hidden; }
+  .dp-prod { padding: 12px 16px; border-bottom: 1px solid var(--borde-suave); }
+  .dp-prod:last-child { border-bottom: 0; }
+  .dp-prod-n { font-weight: 600; font-size: 15px; }
+  .dp-prod-n span { font-weight: 400; color: var(--texto-suave); }
+  .dp-vars { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .dp-var { height: 38px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--verde-medio); background: var(--verde-claro); color: var(--verde); font-size: 13.5px; font-weight: 600; }
+  .dp-var:hover { background: #D5EBDC; }
+  .dp-pie { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; }
+  .dp-nota { flex: 1 1 300px; }
+  .dp-tot { text-align: right; }
+  .dp-antes { font-size: 13px; color: var(--texto-suave); }
+  .dp-total { font-family: var(--serif); font-size: 30px; font-weight: 700; }
+
+  .toast-deshacer { display: flex; align-items: center; gap: 22px; padding: 10px 12px 10px 20px; }
+  .toast-deshacer button { background: none; border: 0; color: var(--mostaza); font-weight: 700; letter-spacing: .05em; text-decoration: underline; font-size: 14px; min-height: 40px; padding: 0 8px; }
+
   /* ─── Celu ─── */
   @media (max-width: 760px) {
     .login-marca { padding: 32px 28px; min-height: 240px; justify-content: flex-end; gap: 12px; }
@@ -288,6 +425,29 @@
     .f-pie .btn { width: 100%; }
     .dlg-ancho .acciones { flex-direction: column-reverse; }
     .dlg-ancho .acciones .btn { width: 100%; }
+
+    .pd-toggle { width: 100%; }
+    .pd-toggle button { height: 50px; }
+    #vistaPedidos.en-conf .pd-chips { display: none; }
+    .pd-chips { flex-wrap: nowrap; overflow-x: auto; width: 100%; padding-bottom: 4px; }
+    .pd-chips .chip-f { flex: none; }
+    .btn-nuevo-ped { height: 44px; padding: 0 14px; font-size: 14px; }
+    .pd-fila { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "cab total" "items items" "pago pago" "acc acc"; gap: 10px 14px; padding: 16px; }
+    .pd-dia { padding: 10px 16px; }
+    .pd-acc { flex-direction: row; align-items: center; }
+    .pd-acc .btn-conf { flex: 1; height: 46px; }
+    .pd-grilla { grid-template-columns: 1fr; gap: 14px; }
+    .pc-gestion { display: none; }
+    .plegados { grid-template-columns: 1fr; }
+    .dlg-pedido .dlg { padding: 20px 16px; }
+    .dp-it { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "n n" "c p" "c q"; gap: 6px 10px; }
+    .dp-it > div:first-child { grid-area: n; }
+    .dp-cant { grid-area: c; }
+    .dp-it-p { grid-area: p; }
+    .dp-quitar { grid-area: q; justify-self: end; }
+    .dp-pie .acciones { width: 100%; flex-direction: column-reverse; }
+    .dp-pie .acciones .btn { width: 100%; }
+    .dp-tot { text-align: left; }
   }
 </style>
 </head>
@@ -332,7 +492,7 @@
     <div class="sub">Panel de administración</div>
     <button class="nav-item activo" data-nav="lista" aria-current="page">Productos</button>
     <button class="nav-item" data-nav="nuevo">Agregar producto</button>
-    <button class="nav-item" aria-disabled="true" title="Llega más adelante">Pedidos <span class="tag">pronto</span></button>
+    <button class="nav-item" data-nav="pedidos">Pedidos <span class="nav-cont" id="navPedCont" hidden></span></button>
     <button class="nav-item" aria-disabled="true" title="Llega más adelante">Ajustes <span class="tag">pronto</span></button>
     <div class="espacio"></div>
     <button class="nav-item salir" data-salir>Cerrar sesión</button>
@@ -491,10 +651,37 @@
     </form>
   </main>
 
+  <!-- ═══ PEDIDOS ═══ -->
+  <main class="principal" id="vistaPedidos" hidden>
+    <header class="cabecera">
+      <div>
+        <h1>Pedidos</h1>
+        <div id="pdResumen" class="resumen">&nbsp;</div>
+      </div>
+      <div class="cab-der">
+        <button type="button" id="pdNuevo" class="btn btn-nuevo-ped">+ Nuevo pedido</button>
+      </div>
+    </header>
+    <div class="pd-barra">
+      <div class="pd-toggle" role="group" aria-label="Qué pedidos ver">
+        <button type="button" data-vista="pedidos" aria-pressed="true">Pedidos <span class="pd-cont" id="cPed">0</span></button>
+        <button type="button" data-vista="confirmados" aria-pressed="false" id="tgConf">Confirmados <span class="pd-cont" id="cConf">0</span></button>
+      </div>
+      <div class="chips-filtro pd-chips" role="group" aria-label="Filtrar pedidos">
+        <button type="button" class="chip-f" data-pfiltro="todos" aria-pressed="true">Todos</button>
+        <button type="button" class="chip-f" data-pfiltro="sinpagar" aria-pressed="false">Sin pagar</button>
+        <button type="button" class="chip-f" data-pfiltro="armados" aria-pressed="false">Armados</button>
+        <button type="button" class="chip-f" data-pfiltro="borrados" aria-pressed="false">Borrados</button>
+      </div>
+    </div>
+    <p class="ayuda" id="pdAyuda"></p>
+    <section id="pdLista" aria-live="polite"></section>
+  </main>
+
   <nav class="tabbar" aria-label="Secciones">
     <button class="tab activo" data-nav="lista" aria-current="page">Productos</button>
     <button class="tab" data-nav="nuevo">Agregar</button>
-    <button class="tab" aria-disabled="true">Pedidos <span class="tag">pronto</span></button>
+    <button class="tab" data-nav="pedidos">Pedidos <span class="tag" id="tabPedCont" hidden></span></button>
     <button class="tab" aria-disabled="true">Ajustes <span class="tag">pronto</span></button>
   </nav>
 </div>
@@ -544,7 +731,76 @@
   </div>
 </dialog>
 
+<!-- ═══ VENTANA: PEDIDO (editar / nuevo) ═══ -->
+<dialog id="dlgPedido" class="dlg-pedido" aria-labelledby="dpTitulo">
+  <form id="formPedido" class="dlg" novalidate>
+    <div class="dp-cab">
+      <div>
+        <h2 id="dpTitulo">Editar pedido</h2>
+        <div id="dpSub" class="sub"></div>
+      </div>
+    </div>
+    <div id="dpAviso" class="dp-aviso" hidden></div>
+    <div class="dp-campos">
+      <label class="campo">Nombre del cliente
+        <input id="dpNombre" class="input" type="text" maxlength="80" autocomplete="off" placeholder="Ej: Paula">
+      </label>
+      <label class="campo dp-solo-nuevo">Entrega
+        <input id="dpEntrega" class="input" type="text" maxlength="200" autocomplete="off" list="dpEntregas" placeholder="Ej: Retiro por Palermo">
+        <datalist id="dpEntregas"></datalist>
+      </label>
+      <label class="campo dp-solo-nuevo">Costo de envío
+        <input id="dpEnvio" class="input" type="text" inputmode="numeric" autocomplete="off" placeholder="Vacío = sin costo">
+      </label>
+      <label class="campo dp-solo-nuevo">Pago
+        <select id="dpPago" class="input"></select>
+      </label>
+    </div>
+    <div class="dp-checks dp-solo-nuevo">
+      <label><input id="dpConfirmado" type="checkbox" class="sw" checked> Crear ya <b>confirmado</b> (aparece directo para armar)</label>
+      <label><input id="dpPagado" type="checkbox" class="sw"> Ya está <b>pagado</b></label>
+    </div>
+    <div id="dpItems"></div>
+    <div class="dp-buscar">
+      <label class="campo">Agregar producto
+        <input id="dpBuscar" class="input" type="search" autocomplete="off" placeholder="Buscá por nombre o marca…">
+      </label>
+      <div id="dpRes" class="dp-res" hidden></div>
+    </div>
+    <div class="dp-pie">
+      <label class="campo dp-nota">Nota interna (la ven ustedes, el cliente no)
+        <input id="dpNotas" class="input" type="text" maxlength="500" autocomplete="off" placeholder="Opcional">
+      </label>
+      <div class="dp-tot">
+        <div id="dpAntes" class="dp-antes"></div>
+        <div id="dpTotal" class="dp-total">Total $0</div>
+      </div>
+    </div>
+    <div id="dpError" class="msg-error" role="alert" hidden></div>
+    <div class="dp-pie">
+      <span></span>
+      <div class="acciones">
+        <button type="button" id="dpCancelar" class="btn btn-borde">Cancelar</button>
+        <button type="submit" id="dpGuardar" class="btn btn-primario">Guardar cambios</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<!-- ═══ VENTANA: BORRAR PEDIDO ARMADO ═══ -->
+<dialog id="dlgBorrarPed" class="dlg-ancho" aria-labelledby="dbTitulo">
+  <div class="dlg">
+    <h2 id="dbTitulo">¿Borrar el pedido?</h2>
+    <p class="de-txt" id="dbTexto"></p>
+    <div class="acciones">
+      <button type="button" id="dbCancelar" class="btn btn-neutro">Cancelar</button>
+      <button type="button" id="dbConfirmar" class="btn btn-rojo">Sí, borrar</button>
+    </div>
+  </div>
+</dialog>
+
 <div id="toast" class="toast" role="status" hidden></div>
+<div id="toastDeshacer" class="toast toast-deshacer" role="status" hidden><span id="tdTexto"></span><button type="button" id="tdBtn">DESHACER</button></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
 <script>
@@ -702,6 +958,7 @@ const CONFIG = {
     borrarToken();
     datos = { productos: [], variantes: [], categorias: [] };
     form = null;
+    pd.lista = []; pd.cargado = false;
     mostrarVista('lista');
     mostrarLogin();
   }
@@ -712,6 +969,10 @@ const CONFIG = {
     $('#vistaLogin').hidden = true;
     $('#vistaPanel').hidden = false;
     cargar();
+    let ultima = '';
+    try { ultima = localStorage.getItem('panel_vista') || ''; } catch (e) {}
+    if (ultima === 'pedidos') { mostrarVista('pedidos'); renderPedidos(); }
+    cargarPedidos(true);
   }
 
   async function cargar() {
@@ -956,8 +1217,9 @@ const CONFIG = {
 
   function mostrarVista(v) {
     $('#vistaLista').hidden = v !== 'lista';
-    $('#vistaForm').hidden = v === 'lista';
-    const nav = v === 'form' && form && form.modo === 'nuevo' ? 'nuevo' : 'lista';
+    $('#vistaForm').hidden = v !== 'form';
+    $('#vistaPedidos').hidden = v !== 'pedidos';
+    const nav = v === 'pedidos' ? 'pedidos' : (v === 'form' && form && form.modo === 'nuevo' ? 'nuevo' : 'lista');
     document.querySelectorAll('.nav-item[data-nav], .tab[data-nav]').forEach(b => {
       const act = b.dataset.nav === nav;
       b.classList.toggle('activo', act);
@@ -967,8 +1229,27 @@ const CONFIG = {
   }
 
   document.querySelectorAll('[data-nav]').forEach(b => b.addEventListener('click', () => {
-    if (b.dataset.nav === 'nuevo') abrirForm(null); else salirForm();
+    const n = b.dataset.nav;
+    if (n === 'nuevo') abrirForm(null);
+    else if (n === 'pedidos') irPedidos();
+    else irLista();
   }));
+
+  function recordarVista(v) { try { localStorage.setItem('panel_vista', v); } catch (e) {} }
+  function irLista() {
+    recordarVista('lista');
+    if (formAbierto()) salirForm(); else mostrarVista('lista');
+  }
+  function irPedidos() {
+    if (formAbierto()) {
+      if (hayCambios() && !confirm(PREGUNTA_DESCARTAR)) return;
+      salirForm(true);
+    }
+    recordarVista('pedidos');
+    mostrarVista('pedidos');
+    renderPedidos();
+    cargarPedidos(true);
+  }
   $('#btnVolver').addEventListener('click', () => salirForm());
 
   function abrirForm(id) {
@@ -1426,6 +1707,518 @@ const CONFIG = {
     }
   });
 
+  // ═══════════════ PEDIDOS ═══════════════
+  const enCelu = () => window.matchMedia('(max-width: 760px)').matches;
+  const pd = { lista: [], vista: enCelu() ? 'confirmados' : 'pedidos', filtro: 'todos', cargado: false, cargando: false, pend: 0, hora: null, error: '' };
+  const DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+  const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  const pedido = k => pd.lista.find(p => p.key === k);
+  const fechaDe = p => new Date(p.fecha);
+  const mayus = t => t.charAt(0).toUpperCase() + t.slice(1);
+  const horaTxt = d => d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false });
+  const nProd = p => { const n = p.items.reduce((s, i) => s + (Number(i.cant) || 0), 0); return n + (n === 1 ? ' producto' : ' productos'); };
+
+  function diasAtras(d) {
+    const a = new Date(); a.setHours(0, 0, 0, 0);
+    const b = new Date(d); b.setHours(0, 0, 0, 0);
+    return Math.round((a - b) / 864e5);
+  }
+  function tituloDia(d) {
+    if (isNaN(d)) return 'Sin fecha';
+    const n = diasAtras(d);
+    const base = DIAS[d.getDay()] + ' ' + d.getDate();
+    if (n === 0) return 'Hoy · ' + base;
+    if (n === 1) return 'Ayer · ' + base;
+    return mayus(base + ' de ' + MESES[d.getMonth()]);
+  }
+  function cuando(p) {
+    const d = fechaDe(p);
+    if (isNaN(d)) return '';
+    const n = diasAtras(d);
+    return (n === 0 ? 'hoy' : n === 1 ? 'ayer' : d.getDate() + '/' + (d.getMonth() + 1)) + ' · ' + horaTxt(d);
+  }
+  function atraso(p) {
+    const n = diasAtras(fechaDe(p));
+    return n === 1 ? 'de ayer' : n > 1 ? 'de hace ' + n + ' días' : '';
+  }
+  function datosPago(p) {
+    const efe = /efectivo/i.test(p.pago);
+    const medio = p.pago || 'Pago';
+    if (p.pagado) return { c: 'si', t: '✓ Pagado', s: medio + ' · ' + (efe ? 'cobrado' : 'confirmado') };
+    if (efe) return { c: 'efe', t: 'Efectivo', s: 'Cobrar al entregar' };
+    return { c: 'sin', t: 'Sin pagar', s: medio + ' · sin confirmar' };
+  }
+  function pagoHTML(p) {
+    const d = datosPago(p);
+    return '<button type="button" class="pago ' + d.c + '" data-acc="pago" title="Tocá para cambiar"' +
+      ' aria-label="Pedido #' + esc(p.numero) + ': ' + esc(d.t + ', ' + d.s) + '. Tocá para marcarlo ' + (p.pagado ? 'sin pagar' : 'pagado') + '">' +
+      '<b>' + esc(d.t) + '</b><small>' + esc(d.s) + '</small></button>';
+  }
+  const totalTxt = p => p.total || precioTxt(p.subtotal);
+  function etiquetas(p, conAtraso) {
+    let h = '';
+    if (p.cambio) h += '<span class="etq cambio">Cambió después de confirmar</span>';
+    const a = conAtraso ? atraso(p) : '';
+    if (a) h += '<span class="etq ayer">' + a + '</span>';
+    if (p.notas) h += '<span class="etq nota">Nota: ' + esc(p.notas) + '</span>';
+    return h ? '<div>' + h + '</div>' : '';
+  }
+  const cabHTML = p => '<div class="pd-cab"><div class="pd-num">#' + esc(p.numero) + '</div><div class="pd-nombre">' + esc(p.nombre || 'Sin nombre') + '</div><div class="pd-hora">' + esc(cuando(p)) + '</div></div>';
+  const itemsHTML = p => p.items.map(i => '<div><b>' + esc(i.cant) + '×</b> ' + esc(i.nombre) + (i.label ? ' <span class="v">(' + esc(i.label) + ')</span>' : '') + '</div>').join('');
+
+  // Fila de "Pedidos" (sin confirmar)
+  function filaPedidoHTML(p) {
+    return '<div class="pd-fila" data-key="' + esc(p.key) + '">' + cabHTML(p) +
+      '<div class="pd-items">' + itemsHTML(p) + '<div class="pd-entrega">' + esc([p.entrega, p.pago].filter(Boolean).join(' · ')) + '</div>' + etiquetas(p, false) + '</div>' +
+      '<div class="pd-total">' + esc(totalTxt(p)) + '</div>' +
+      '<div class="pd-pago">' + pagoHTML(p) + '</div>' +
+      '<div class="pd-acc"><button type="button" class="btn-conf" data-acc="confirmar">Confirmar pedido</button>' +
+      '<div class="pd-links"><button type="button" class="lnk" data-acc="editar">Editar</button><button type="button" class="lnk rojo" data-acc="borrar">Borrar</button></div></div></div>';
+  }
+
+  // Fila de borrados
+  function filaBorradaHTML(p) {
+    return '<div class="pd-fila borrada" data-key="' + esc(p.key) + '">' + cabHTML(p) +
+      '<div class="pd-items">' + itemsHTML(p) + '<div class="pd-entrega">' + esc([p.entrega, p.pago].filter(Boolean).join(' · ')) + '</div></div>' +
+      '<div class="pd-total">' + esc(totalTxt(p)) + '</div>' +
+      '<div class="pd-pago"><span class="etq gris">Borrado</span></div>' +
+      '<div class="pd-acc"><button type="button" class="btn-conf" data-acc="recuperar">Recuperar</button></div></div>';
+  }
+
+  // Tarjeta de "Confirmados" (para armar)
+  function tarjetaHTML(p) {
+    return '<article class="pc-card" data-key="' + esc(p.key) + '">' +
+      '<div class="pc-cab"><div><div class="pd-num">#' + esc(p.numero) + '</div><div class="pd-nombre">' + esc(p.nombre || 'Sin nombre') + '</div></div><div class="pd-hora">' + esc(cuando(p)) + '</div></div>' +
+      etiquetas(p, true) +
+      '<div class="pc-items">' + p.items.map(i => '<div class="pc-item"><div class="pc-q">' + esc(i.cant) + '×</div><div class="pc-n">' + esc(i.nombre) + (i.label ? ' <span>· ' + esc(i.label) + '</span>' : '') + '</div></div>').join('') + '</div>' +
+      (p.entrega ? '<div class="pc-entrega">' + esc(p.entrega) + '</div>' : '') +
+      '<div class="pc-gestion"><div class="pd-total">' + esc(totalTxt(p)) + '</div>' + pagoHTML(p) + '</div>' +
+      '<button type="button" class="btn-armado" data-acc="armar"><span class="circ" aria-hidden="true"></span><span class="ba-t">Marcar como armado</span></button>' +
+      '<div class="pc-links"><button type="button" class="lnk" data-acc="editar">Editar</button><button type="button" class="lnk" data-acc="desconfirmar">Volver a Pedidos</button><button type="button" class="lnk rojo" data-acc="borrar">Borrar</button></div>' +
+      '</article>';
+  }
+
+  function plegadoHTML(p) {
+    return '<button type="button" class="plegado" data-key="' + esc(p.key) + '" data-acc="desarmar" aria-label="Pedido #' + esc(p.numero) + ' armado. Tocá para desmarcarlo">' +
+      '<span class="circ" aria-hidden="true">✓</span><span class="pl-num">#' + esc(p.numero) + '</span><span class="pl-n">' + esc(p.nombre || 'Sin nombre') + '</span><span class="pl-c">' + esc(nProd(p)) + '</span></button>';
+  }
+
+  function porDia(lista) {
+    const grupos = [];
+    lista.forEach(p => {
+      const d = fechaDe(p);
+      const k = isNaN(d) ? 'x' : d.toDateString();
+      const g = grupos[grupos.length - 1];
+      if (g && g.k === k) g.items.push(p); else grupos.push({ k: k, d: d, items: [p] });
+    });
+    return grupos;
+  }
+  function bandaHTML(g, sub) {
+    const atr = !isNaN(g.d) && diasAtras(g.d) > 0;
+    return '<div class="pd-dia' + (atr && sub.atraso ? ' atrasado' : '') + '"><span class="pd-dia-t">' + esc(tituloDia(g.d)) + '</span><span class="pd-dia-s">' +
+      esc(atr && sub.atraso ? sub.atraso : g.items.length + (g.items.length === 1 ? ' pedido' : ' pedidos')) + '</span></div>';
+  }
+  const masNuevo = (a, b) => fechaDe(b) - fechaDe(a);
+  const masViejo = (a, b) => fechaDe(a) - fechaDe(b);
+
+  function contar() {
+    const vivos = pd.lista.filter(p => !p.borrado);
+    return {
+      vivos: vivos,
+      pend: vivos.filter(p => p.estado === 'Pendiente'),
+      conf: vivos.filter(p => p.estado === 'Confirmado'),
+      armHoy: vivos.filter(p => p.estado === 'Armado' && p.armadoEn && diasAtras(new Date(p.armadoEn)) === 0)
+    };
+  }
+
+  function pintarContadores() {
+    const c = contar();
+    $('#cPed').textContent = c.pend.length;
+    $('#cConf').textContent = c.conf.length;
+    const nav = $('#navPedCont');
+    nav.textContent = c.pend.length; nav.hidden = !pd.cargado || !c.pend.length;
+    const tab = $('#tabPedCont');
+    tab.textContent = c.conf.length; tab.hidden = !pd.cargado || !c.conf.length;
+    return c;
+  }
+
+  function renderPedidos() {
+    const c = pintarContadores();
+    document.querySelectorAll('.pd-toggle [data-vista]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.vista === pd.vista && !/armados|borrados/.test(pd.filtro))));
+    document.querySelectorAll('[data-pfiltro]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.pfiltro === pd.filtro)));
+    $('#vistaPedidos').classList.toggle('en-conf', pd.vista === 'confirmados');
+    $('#pdResumen').textContent = pd.cargado
+      ? c.pend.length + ' sin confirmar · ' + c.conf.length + ' por armar · se actualiza sola' + (pd.hora ? ' (última vez ' + horaTxt(pd.hora) + ')' : '')
+      : ' ';
+    const cont = $('#pdLista');
+    if (!pd.cargado) {
+      cont.innerHTML = pd.error
+        ? '<div class="pd-vacio">' + esc(pd.error) + '<br><br><button class="btn btn-borde" type="button" data-acc="reintentar">Reintentar</button></div>'
+        : '<div class="pd-vacio">Cargando pedidos…</div>';
+      return;
+    }
+    const sinPagar = p => pd.filtro !== 'sinpagar' || !p.pagado;
+    let html = '';
+    let ayuda = '';
+
+    if (pd.filtro === 'borrados') {
+      ayuda = 'Pedidos borrados: no aparecen en las listas pero siguen guardados en el Sheet. "Recuperar" los vuelve a poner donde estaban.';
+      const l = pd.lista.filter(p => p.borrado).sort(masNuevo);
+      html = l.length ? '<div class="pd-tabla">' + porDia(l).map(g => bandaHTML(g, {}) + g.items.map(filaBorradaHTML).join('')).join('') + '</div>'
+        : '<div class="pd-vacio">No hay pedidos borrados.</div>';
+    } else if (pd.filtro === 'armados') {
+      ayuda = 'Pedidos ya armados (últimos 45 días). Tocá uno si hay que desmarcarlo.';
+      const l = c.vivos.filter(p => p.estado === 'Armado' || p.estado === 'Enviado').sort(masNuevo);
+      html = l.length ? '<div class="pd-grilla">' + porDia(l).map(g => bandaHTML(g, {}) + '<div class="plegados">' + g.items.map(plegadoHTML).join('') + '</div>').join('') + '</div>'
+        : '<div class="pd-vacio">Todavía no hay pedidos armados.</div>';
+    } else if (pd.vista === 'pedidos') {
+      ayuda = 'Pedidos que todavía no se confirmaron. Al confirmar pasan a "Confirmados" y los ve quien arma las cajas. Tocá el cartel de pago para marcarlo pagado.';
+      const l = c.pend.filter(sinPagar).sort(masNuevo);
+      html = l.length ? '<div class="pd-tabla">' + porDia(l).map(g => bandaHTML(g, { atraso: 'sin confirmar todavía' }) + g.items.map(filaPedidoHTML).join('')).join('') + '</div>'
+        : '<div class="pd-vacio">' + (pd.filtro === 'sinpagar' ? 'No hay pedidos sin pagar por confirmar.' : 'No hay pedidos esperando confirmación. 🎉') + '</div>';
+    } else {
+      ayuda = 'Para armar, de los más viejos a los más nuevos. Al marcarlo como armado se pliega y baja al final.';
+      const l = c.conf.filter(sinPagar).sort(masViejo);
+      const arm = c.armHoy.filter(sinPagar).sort((a, b) => new Date(a.armadoEn) - new Date(b.armadoEn));
+      html = '<div class="pd-grilla">' +
+        (l.length ? porDia(l).map(g => bandaHTML(g, { atraso: 'sin armar todavía' }) + g.items.map(tarjetaHTML).join('')).join('')
+          : '<div class="pd-vacio">' + (pd.filtro === 'sinpagar' ? 'No hay confirmados sin pagar.' : 'No hay pedidos para armar. 🎉') + '</div>') +
+        (arm.length ? '<div class="armados-t"><b>Armados hoy</b><span>' + arm.length + ' · tocá uno si te equivocaste</span></div><div class="plegados">' + arm.map(plegadoHTML).join('') + '</div>' : '') +
+        '</div>';
+    }
+    $('#pdAyuda').textContent = ayuda;
+    cont.innerHTML = html;
+  }
+
+  async function cargarPedidos(silencioso) {
+    if (pd.cargando || !token) return;
+    pd.cargando = true;
+    if (!silencioso && !pd.cargado) { pd.error = ''; renderPedidos(); }
+    try {
+      const r = await api('listarPedidos');
+      if (pd.pend) return;            // hay cambios en camino: se actualiza en la próxima vuelta
+      pd.lista = r.pedidos || [];
+      pd.cargado = true;
+      pd.error = '';
+      pd.hora = new Date();
+      if ($('#dlgPedido').open || $('#dlgBorrarPed').open) pintarContadores(); else renderPedidos();
+    } catch (e) {
+      if (e.codigo === 'auth') return;
+      if (!pd.cargado) { pd.error = e.message; renderPedidos(); }
+    } finally {
+      pd.cargando = false;
+    }
+  }
+
+  // Se actualiza sola cada minuto (y al volver a la pestaña).
+  setInterval(() => { if (token && !$('#vistaPanel').hidden && document.visibilityState === 'visible') cargarPedidos(true); }, 60000);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && token && !$('#vistaPanel').hidden) cargarPedidos(true); });
+
+  function reemplazar(r) {
+    const i = pd.lista.findIndex(x => x.key === r.key);
+    if (i >= 0) pd.lista[i] = r; else pd.lista.push(r);
+  }
+
+  // Cambio con respuesta inmediata en pantalla; si el script falla, vuelve atrás.
+  async function cambiar(p, local, accion, extra, queFallo, espera) {
+    const antes = JSON.parse(JSON.stringify(p));
+    pd.pend++;
+    const llamada = api(accion, Object.assign({ key: p.key }, extra));
+    llamada.catch(() => {});
+    if (espera) await new Promise(r => setTimeout(r, espera));
+    Object.assign(p, local);
+    renderPedidos();
+    try {
+      reemplazar(await llamada);
+      return true;
+    } catch (e) {
+      Object.assign(p, antes);
+      if (e.codigo !== 'auth') aviso('No se pudo ' + queFallo + ' el #' + p.numero + ': ' + e.message);
+      return false;
+    } finally {
+      pd.pend--;
+      renderPedidos();
+    }
+  }
+
+  function efectoConfirmados() {
+    const b = $('#tgConf');
+    const c = $('#cConf');
+    c.textContent = Number(c.textContent || 0) + 1;
+    b.classList.remove('pulso');
+    void b.offsetWidth;
+    b.classList.add('pulso');
+    const uno = document.createElement('span');
+    uno.className = 'mas-uno';
+    uno.textContent = '+1';
+    uno.setAttribute('aria-hidden', 'true');
+    $('.pd-toggle').appendChild(uno);
+    setTimeout(() => { uno.remove(); b.classList.remove('pulso'); }, 1600);
+  }
+
+  let deshacerAccion = null;
+  let timerDeshacer = null;
+  function avisoDeshacer(texto, fn) {
+    $('#tdTexto').textContent = texto;
+    deshacerAccion = fn;
+    $('#toastDeshacer').hidden = false;
+    $('#toast').hidden = true;
+    clearTimeout(timerDeshacer);
+    timerDeshacer = setTimeout(() => { $('#toastDeshacer').hidden = true; deshacerAccion = null; }, 7000);
+  }
+  $('#tdBtn').addEventListener('click', () => {
+    const fn = deshacerAccion;
+    deshacerAccion = null;
+    $('#toastDeshacer').hidden = true;
+    if (fn) fn();
+  });
+
+  function borrarPedido(p) {
+    cambiar(p, { borrado: true }, 'pedidoBorrar', { borrado: true }, 'borrar');
+    avisoDeshacer('Pedido #' + p.numero + ' borrado', () => {
+      const q = pedido(p.key);
+      if (q) cambiar(q, { borrado: false }, 'pedidoBorrar', { borrado: false }, 'recuperar');
+    });
+  }
+
+  let aBorrar = null;
+  $('#dbCancelar').addEventListener('click', () => $('#dlgBorrarPed').close());
+  $('#dbConfirmar').addEventListener('click', () => {
+    $('#dlgBorrarPed').close();
+    const p = aBorrar && pedido(aBorrar);
+    if (p) borrarPedido(p);
+  });
+
+  $('#pdLista').addEventListener('click', e => {
+    const b = e.target.closest('[data-acc]');
+    if (!b) return;
+    if (b.dataset.acc === 'reintentar') { cargarPedidos(); return; }
+    const el = b.closest('[data-key]');
+    const p = el && pedido(el.dataset.key);
+    if (!p) return;
+    switch (b.dataset.acc) {
+      case 'pago':
+        cambiar(p, { pagado: !p.pagado }, 'pedidoPago', { pagado: !p.pagado }, 'cambiar el pago de');
+        break;
+      case 'confirmar':
+        b.disabled = true;
+        b.classList.add('ok');
+        b.textContent = '✓ Confirmado';
+        b.closest('.pd-fila').classList.add('hecho');
+        efectoConfirmados();
+        cambiar(p, { estado: 'Confirmado' }, 'pedidoEstado', { estado: 'Confirmado' }, 'confirmar', 1500);
+        break;
+      case 'armar':
+        b.disabled = true;
+        b.classList.add('ok');
+        b.querySelector('.circ').textContent = '✓';
+        b.querySelector('.ba-t').textContent = 'Armado';
+        cambiar(p, { estado: 'Armado', armadoEn: new Date().toISOString(), cambio: false }, 'pedidoEstado', { estado: 'Armado' }, 'marcar armado', 700);
+        break;
+      case 'desarmar':
+        cambiar(p, { estado: 'Confirmado', armadoEn: '' }, 'pedidoEstado', { estado: 'Confirmado' }, 'desmarcar');
+        break;
+      case 'desconfirmar':
+        cambiar(p, { estado: 'Pendiente', armadoEn: '', cambio: false }, 'pedidoEstado', { estado: 'Pendiente' }, 'mover');
+        aviso('El #' + p.numero + ' volvió a "Pedidos".');
+        break;
+      case 'recuperar':
+        cambiar(p, { borrado: false }, 'pedidoBorrar', { borrado: false }, 'recuperar');
+        aviso('Pedido #' + p.numero + ' recuperado.');
+        break;
+      case 'editar':
+        abrirPedido(p);
+        break;
+      case 'borrar':
+        if (p.estado === 'Armado') {
+          aBorrar = p.key;
+          $('#dbTitulo').textContent = '¿Borrar el pedido #' + p.numero + '?';
+          $('#dbTexto').textContent = (p.nombre || 'Este pedido') + ' ya está armado. Si lo borrás deja de verse en el panel (queda guardado en el Sheet y lo podés recuperar desde el filtro "Borrados").';
+          $('#dlgBorrarPed').showModal();
+          $('#dbCancelar').focus();
+        } else borrarPedido(p);
+        break;
+    }
+  });
+
+  document.querySelectorAll('.pd-toggle [data-vista]').forEach(b => b.addEventListener('click', () => {
+    pd.vista = b.dataset.vista;
+    if (/armados|borrados/.test(pd.filtro)) pd.filtro = 'todos';
+    renderPedidos();
+  }));
+  document.querySelectorAll('[data-pfiltro]').forEach(b => b.addEventListener('click', () => {
+    pd.filtro = b.dataset.pfiltro;
+    renderPedidos();
+  }));
+
+  // ─── Ventana: editar / nuevo pedido ───
+  let dp = null;   // { p: pedido o null, items: [...], inicial }
+
+  function nombreItem(p) {
+    const repetido = datos.productos.filter(x => normal(x.nombre).trim() === normal(p.nombre).trim()).length > 1;
+    return String(p.nombre || '').trim() + (repetido && p.marca ? ' · ' + String(p.marca).trim() : '');
+  }
+  const costoEnvio = t => /\d/.test(String(t || '')) ? num(t) : 0;
+  const estadoDlg = () => JSON.stringify([$('#dpNombre').value.trim(), $('#dpNotas').value.trim(), $('#dpEntrega').value.trim(), $('#dpEnvio').value.trim(), dp ? dp.items : []]);
+
+  function abrirPedido(p) {
+    dp = { p: p, items: (p ? p.items : []).map(i => Object.assign({}, i)) };
+    const nuevo = !p;
+    $('#dpTitulo').innerHTML = nuevo ? 'Nuevo pedido' : 'Editar pedido <span>#' + esc(p.numero) + '</span>';
+    $('#dpSub').textContent = nuevo ? 'Para pedidos que llegan por chat, teléfono o en persona. Toma el próximo número.'
+      : [cuando(p), p.entrega, p.pago].filter(Boolean).join(' · ');
+    const av = $('#dpAviso');
+    av.hidden = nuevo || p.estado === 'Pendiente';
+    if (!av.hidden) av.innerHTML = p.estado === 'Confirmado'
+      ? 'Este pedido <b>ya está confirmado</b>. Si cambiás los productos, en la pantalla de armado va a aparecer "Cambió después de confirmar".'
+      : 'Este pedido <b>ya está armado</b>. Si cambiás algo, acordate de revisar la caja.';
+    document.querySelectorAll('.dp-solo-nuevo').forEach(el => { el.hidden = !nuevo; });
+    $('#dpNombre').value = p ? p.nombre : '';
+    $('#dpNotas').value = p ? p.notas : '';
+    $('#dpEntrega').value = '';
+    $('#dpEnvio').value = '';
+    const entregas = Array.from(new Set(pd.lista.map(x => x.entrega).filter(Boolean)));
+    $('#dpEntregas').innerHTML = entregas.slice(0, 30).map(t => '<option value="' + esc(t) + '">').join('');
+    const pagos = Array.from(new Set(['Transferencia', 'Efectivo'].concat(pd.lista.map(x => x.pago).filter(Boolean))));
+    $('#dpPago').innerHTML = pagos.map(t => '<option>' + esc(t) + '</option>').join('');
+    $('#dpConfirmado').checked = true;
+    $('#dpPagado').checked = false;
+    $('#dpBuscar').value = '';
+    $('#dpRes').hidden = true;
+    $('#dpError').hidden = true;
+    $('#dpGuardar').textContent = nuevo ? 'Crear pedido' : 'Guardar cambios';
+    pintarItemsDlg();
+    dp.inicial = estadoDlg();
+    $('#dlgPedido').showModal();
+    (nuevo ? $('#dpNombre') : $('#dpBuscar')).focus();
+  }
+
+  function pintarItemsDlg() {
+    const its = dp.items;
+    $('#dpItems').innerHTML = its.length ? its.map((i, k) =>
+      '<div class="dp-it" data-i="' + k + '"><div><div class="dp-it-n">' + esc(i.nombre) + '</div><div class="dp-it-v">' + (i.label ? 'Presentación ' + esc(i.label) + ' · ' : '') + (i.precio ? precioTxt(i.precio) + ' c/u' : 'sin precio') + '</div></div>' +
+      '<div class="dp-cant"><button type="button" data-op="menos" aria-label="Uno menos de ' + esc(i.nombre) + '">−</button><span aria-label="Cantidad">' + esc(i.cant) + '</span><button type="button" data-op="mas" aria-label="Uno más de ' + esc(i.nombre) + '">+</button></div>' +
+      '<div class="dp-it-p">' + precioTxt(i.cant * i.precio) + '</div>' +
+      '<button type="button" class="dp-quitar" data-op="quitar" aria-label="Quitar ' + esc(i.nombre) + '">Quitar</button></div>'
+    ).join('') : '<div class="dp-vacio">Todavía no hay productos. Buscalos abajo para agregarlos.</div>';
+    const sub = its.reduce((s, i) => s + i.cant * i.precio, 0);
+    const envio = dp.p ? dp.p.envio : $('#dpEnvio').value;
+    const total = sub + costoEnvio(envio);
+    $('#dpTotal').textContent = 'Total ' + precioTxt(total) + (/coordinar/i.test(envio) ? ' + envío' : '');
+    const antes = dp.p ? totalTxt(dp.p) : '';
+    $('#dpAntes').textContent = dp.p && antes !== precioTxt(total) && antes !== precioTxt(total) + ' + envío' ? 'Antes ' + antes : (costoEnvio(envio) ? 'Incluye envío ' + precioTxt(costoEnvio(envio)) : '');
+  }
+
+  $('#dpItems').addEventListener('click', e => {
+    const b = e.target.closest('[data-op]');
+    if (!b) return;
+    const k = Number(b.closest('.dp-it').dataset.i);
+    const it = dp.items[k];
+    if (!it) return;
+    if (b.dataset.op === 'mas') it.cant = Math.min(999, it.cant + 1);
+    if (b.dataset.op === 'menos') it.cant = Math.max(1, it.cant - 1);
+    if (b.dataset.op === 'quitar') dp.items.splice(k, 1);
+    pintarItemsDlg();
+    const fila = $('#dpItems').querySelector('.dp-it[data-i="' + k + '"] [data-op="' + b.dataset.op + '"]');
+    if (fila) fila.focus(); else $('#dpBuscar').focus();
+  });
+
+  $('#dpEnvio').addEventListener('input', e => {
+    const n = num(e.target.value);
+    e.target.value = n ? n.toLocaleString('es-AR') : '';
+    pintarItemsDlg();
+  });
+
+  let timerBuscarPed = null;
+  $('#dpBuscar').addEventListener('input', () => {
+    clearTimeout(timerBuscarPed);
+    timerBuscarPed = setTimeout(buscarProductos, 120);
+  });
+  $('#dpBuscar').addEventListener('keydown', e => { if (e.key === 'Enter') e.preventDefault(); });
+
+  function buscarProductos() {
+    const q = normal($('#dpBuscar').value.trim());
+    const res = $('#dpRes');
+    if (q.length < 2) { res.hidden = true; res.innerHTML = ''; return; }
+    const palabras = q.split(/\s+/);
+    const encontrados = datos.productos.filter(p => {
+      const t = normal(p.nombre + ' ' + (p.marca || '') + ' ' + catNombre(p.categoria_id));
+      return palabras.every(w => t.includes(w)) && varsDe(p.id).some(v => SI(v.activo));
+    }).slice(0, 8);
+    res.hidden = false;
+    res.innerHTML = encontrados.length ? encontrados.map(p =>
+      '<div class="dp-prod"><div class="dp-prod-n">' + esc(p.nombre) + ' <span>· ' + esc(p.marca || 'Sin marca') + (SI(p.stock) ? '' : ' · sin stock') + '</span></div><div class="dp-vars">' +
+      varsDe(p.id).filter(v => SI(v.activo)).map(v => '<button type="button" class="dp-var" data-pid="' + esc(p.id) + '" data-label="' + esc(v.cantidad_label) + '">+ ' + esc(v.cantidad_label) + ' · ' + esc(precioTxt(v.precio)) + '</button>').join('') +
+      '</div></div>').join('') : '<div class="dp-prod">No encontré productos con "' + esc($('#dpBuscar').value.trim()) + '".</div>';
+  }
+
+  $('#dpRes').addEventListener('click', e => {
+    const b = e.target.closest('.dp-var');
+    if (!b) return;
+    const p = prod(b.dataset.pid);
+    const v = varsDe(b.dataset.pid).find(x => String(x.cantidad_label) === b.dataset.label);
+    if (!p || !v) return;
+    const ya = dp.items.find(i => String(i.pid) === String(p.id) && String(i.label) === String(v.cantidad_label));
+    if (ya) ya.cant = Math.min(999, ya.cant + 1);
+    else dp.items.push({ pid: String(p.id), label: String(v.cantidad_label), nombre: nombreItem(p), cant: 1, precio: num(v.precio) });
+    $('#dpError').hidden = true;
+    pintarItemsDlg();
+    $('#dpBuscar').value = '';
+    $('#dpRes').hidden = true;
+    $('#dpBuscar').focus();
+  });
+
+  function cerrarPedido() {
+    if (dp && estadoDlg() !== dp.inicial && !confirm('Tenés cambios sin guardar en el pedido. ¿Cerrar igual?')) return false;
+    $('#dlgPedido').close();
+    dp = null;
+    return true;
+  }
+  $('#dpCancelar').addEventListener('click', cerrarPedido);
+  $('#dlgPedido').addEventListener('cancel', e => { e.preventDefault(); cerrarPedido(); });
+  $('#pdNuevo').addEventListener('click', () => abrirPedido(null));
+
+  $('#formPedido').addEventListener('submit', async ev => {
+    ev.preventDefault();
+    if (!dp) return;
+    const err = $('#dpError');
+    const nuevo = !dp.p;
+    const nombre = $('#dpNombre').value.trim();
+    if (nuevo && !nombre) { err.textContent = 'Escribí el nombre del cliente.'; err.hidden = false; $('#dpNombre').focus(); return; }
+    if (!dp.items.length) { err.textContent = 'Agregá al menos un producto.'; err.hidden = false; $('#dpBuscar').focus(); return; }
+    const datosPed = { key: nuevo ? '' : dp.p.key, nombre: nombre, notas: $('#dpNotas').value.trim(), items: dp.items };
+    if (nuevo) {
+      const costo = num($('#dpEnvio').value);
+      Object.assign(datosPed, {
+        entrega: $('#dpEntrega').value.trim(),
+        envio: costo ? precioTxt(costo) : 'Sin costo',
+        pago: $('#dpPago').value,
+        confirmado: $('#dpConfirmado').checked,
+        pagado: $('#dpPagado').checked
+      });
+    }
+    const btn = $('#dpGuardar');
+    const texto = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Guardando…';
+    err.hidden = true;
+    pd.pend++;
+    try {
+      const r = await api('guardarPedido', datosPed);
+      reemplazar(r);
+      $('#dlgPedido').close();
+      dp = null;
+      aviso(nuevo ? 'Pedido #' + r.numero + ' creado ✓' + (r.estado === 'Confirmado' ? ' Ya está en "Confirmados".' : '') : 'Pedido #' + r.numero + ' guardado ✓');
+    } catch (e) {
+      if (e.codigo !== 'auth') { err.textContent = e.message; err.hidden = false; } else $('#dlgPedido').close();
+    } finally {
+      pd.pend--;
+      btn.disabled = false;
+      btn.textContent = texto;
+      renderPedidos();
+    }
+  });
+
   // ─── Filtros ───
   let timerBuscar = null;
   $('#buscar').addEventListener('input', e => {
@@ -1433,8 +2226,8 @@ const CONFIG = {
     timerBuscar = setTimeout(() => { filtro.texto = e.target.value; render(); }, 150);
   });
   $('#categoria').addEventListener('change', e => { filtro.cat = e.target.value; render(); });
-  document.querySelectorAll('.chip-f').forEach(b => b.addEventListener('click', () => {
-    document.querySelectorAll('.chip-f').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  document.querySelectorAll('#vistaLista .chip-f').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('#vistaLista .chip-f').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
     filtro.tipo = b.dataset.tipo;
     render();
   }));

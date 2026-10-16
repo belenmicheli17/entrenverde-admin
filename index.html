@@ -401,7 +401,7 @@
     .tg-m { display: inline; }
     .btn-editar { padding: 11px 16px; }
 
-    .tabbar { display: grid; position: fixed; left: 0; right: 0; bottom: 0; height: 64px; background: var(--crema-card); border-top: 1px solid var(--borde); grid-template-columns: repeat(4, 1fr); z-index: 10; }
+    .tabbar { display: grid; position: fixed; left: 0; right: 0; bottom: 0; height: 64px; background: var(--crema-card); border-top: 1px solid var(--borde); grid-auto-flow: column; grid-auto-columns: 1fr; z-index: 10; }
     .tab { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 13px; color: var(--texto-suave); background: none; border: 0; }
     .tab.activo { background: var(--verde-claro); color: var(--verde); font-weight: 700; }
     .tab .tag { font-size: 9px; padding: 1px 5px; }
@@ -809,7 +809,7 @@
    Lo único que hay que cambiar para usar este panel en otra tienda.
    ════════════════════════════════════════════════════════════════ */
 const CONFIG = {
-  tienda: 'En Tren Verde',
+  tienda: 'En Tren Verde',   pedidos: false,   // true = muestra la pestaña Pedidos; false = pausada
   // Dirección del script de guardado del panel (termina en /exec):
   api: 'https://script.google.com/macros/s/AKfycbw-g5D9S2QcR6Kgk8xiWNLsXItPD4QQ9kn-FzWHvMNmiOunT4J2s9TIYapRhPRyBq_rcA/exec'
 };
@@ -971,7 +971,7 @@ const CONFIG = {
     cargar();
     let ultima = '';
     try { ultima = localStorage.getItem('panel_vista') || ''; } catch (e) {}
-    if (ultima === 'pedidos') { mostrarVista('pedidos'); renderPedidos(); }
+    if (ultima === 'pedidos' && CONFIG.pedidos) { mostrarVista('pedidos'); renderPedidos(); }
     cargarPedidos(true);
   }
 
@@ -1891,7 +1891,7 @@ const CONFIG = {
   }
 
   async function cargarPedidos(silencioso) {
-    if (pd.cargando || !token) return;
+    if (pd.cargando || !token || !CONFIG.pedidos) return;
     pd.cargando = true;
     if (!silencioso && !pd.cargado) { pd.error = ''; renderPedidos(); }
     try {
@@ -2233,7 +2233,7 @@ const CONFIG = {
   }));
 
   // ─── Inicio ───
-  document.title = 'Panel · ' + CONFIG.tienda;
+  document.title = 'Panel · ' + CONFIG.tienda;   if (!CONFIG.pedidos) document.querySelectorAll('[data-nav="pedidos"]').forEach(b => b.remove());
   document.querySelectorAll('[data-tienda]').forEach(el => { el.textContent = CONFIG.tienda; });
   if (token) entrar(); else mostrarLogin();
 })();

@@ -366,6 +366,35 @@
   .toast-deshacer { display: flex; align-items: center; gap: 22px; padding: 10px 12px 10px 20px; }
   .toast-deshacer button { background: none; border: 0; color: var(--mostaza); font-weight: 700; letter-spacing: .05em; text-decoration: underline; font-size: 14px; min-height: 40px; padding: 0 8px; }
 
+
+  /* ─── Categorías ─── */
+  .cat-grid { display: grid; grid-template-columns: minmax(300px, 400px) minmax(0, 1fr); gap: 20px; align-items: start; }
+  .cat-col { background: var(--crema-card); border: 1px solid var(--borde); border-radius: 14px; overflow: hidden; }
+  .cat-col-t { padding: 14px 18px; border-bottom: 1px solid var(--borde); font-size: 12px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase; letter-spacing: .04em; }
+  .cat-item { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 10px 14px 10px 10px; border-bottom: 1px solid var(--borde-suave); background: var(--crema-card); transition: background .15s, box-shadow .15s; }
+  .cat-item:last-child { border-bottom: 0; }
+  .cat-item.sel { background: var(--verde-claro); box-shadow: inset 4px 0 0 var(--verde); }
+  .cat-item.destino { background: #FFF3D1; box-shadow: inset 0 0 0 2px var(--mostaza); }
+  .cat-item.oculta .cat-ico, .cat-item.oculta .cat-txt b { opacity: .5; }
+  .cat-abrir { display: flex; align-items: center; gap: 12px; min-width: 0; min-height: 52px; padding: 0; border: 0; background: none; text-align: left; }
+  .cat-ico { position: relative; flex: none; width: 44px; height: 44px; border-radius: 10px; background: var(--verde-claro); color: var(--verde); font-family: var(--serif); font-size: 20px; font-weight: 600; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .cat-ico img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #fff; }
+  .cat-ico.grande { width: 72px; height: 72px; font-size: 30px; }
+  .cat-txt { min-width: 0; }
+  .cat-txt b { display: block; font-size: 15px; font-weight: 600; line-height: 1.25; overflow-wrap: anywhere; }
+  .cat-txt small { display: block; font-size: 12.5px; color: var(--texto-suave); margin-top: 2px; }
+  .cat-txt .badge { margin-left: 0; }
+  .cat-det-cab { padding: 16px 20px; border-bottom: 1px solid var(--borde); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+  .cat-det-cab h2 { margin: 0; font-family: var(--serif); font-size: 24px; font-weight: 600; }
+  .cat-volver { display: none; }
+  .cp-fila { display: grid; grid-template-columns: 24px 48px minmax(0, 1fr) 210px; gap: 12px; align-items: center; padding: 10px 20px 10px 14px; border-bottom: 1px solid var(--borde-suave); background: var(--crema-card); }
+  .cp-fila:last-child { border-bottom: 0; }
+  .cp-fila.oculto .info, .cp-fila.oculto .foto { opacity: .55; }
+  .cp-mover select { width: 100%; height: 42px; border: 1px solid var(--borde); background: #fff; border-radius: 10px; padding: 0 10px; font-size: 14px; }
+  .dc-icono { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .dc-icono .btn { height: 44px; border-color: var(--verde); }
+  #dlgBorrarCat select { height: 46px; }
+
   /* ─── Celu ─── */
   @media (max-width: 760px) {
     .login-marca { padding: 32px 28px; min-height: 240px; justify-content: flex-end; gap: 12px; }
@@ -448,6 +477,20 @@
     .dp-pie .acciones { width: 100%; flex-direction: column-reverse; }
     .dp-pie .acciones .btn { width: 100%; }
     .dp-tot { text-align: left; }
+
+    .cat-grid { grid-template-columns: 1fr; }
+    .cat-grid .cat-det { display: none; }
+    .cat-grid.detalle .cat-det { display: block; }
+    .cat-grid.detalle .cat-lista-col { display: none; }
+    .cat-volver { display: inline-block; margin: 0; }
+    .cat-det-cab { flex-direction: column; align-items: flex-start; }
+    .cp-fila { grid-template-columns: 24px minmax(0, 1fr); grid-template-areas: "grip info" "mover mover"; padding: 12px 14px; }
+    .cp-fila .grip { grid-area: grip; }
+    .cp-fila .info { grid-area: info; }
+    .cp-mover { grid-area: mover; }
+    .cat-item { padding-right: 10px; }
+    .cat-item .btn-mini { padding: 0 10px; }
+    #vistaCategorias .cabecera .btn-agregar { display: inline-flex; align-items: center; height: 44px; padding: 0 14px; font-size: 14px; }
   }
 </style>
 </head>
@@ -492,6 +535,7 @@
     <div class="sub">Panel de administración</div>
     <button class="nav-item activo" data-nav="lista" aria-current="page">Productos</button>
     <button class="nav-item" data-nav="nuevo">Agregar producto</button>
+    <button class="nav-item" data-nav="categorias">Categorías</button>
     <button class="nav-item" data-nav="pedidos">Pedidos <span class="nav-cont" id="navPedCont" hidden></span></button>
     <button class="nav-item" aria-disabled="true" title="Llega más adelante">Ajustes <span class="tag">pronto</span></button>
     <div class="espacio"></div>
@@ -510,7 +554,7 @@
         <div id="resumen" class="resumen">&nbsp;</div>
       </div>
       <div class="cab-der">
-        <span id="estado" class="estado" role="status">Cambios guardados</span>
+        <span id="estado" class="estado" data-estado role="status">Cambios guardados</span>
         <button class="btn btn-agregar" data-nav="nuevo">+ Agregar producto</button>
       </div>
     </header>
@@ -651,6 +695,38 @@
     </form>
   </main>
 
+  <!-- ═══ CATEGORÍAS ═══ -->
+  <main class="principal" id="vistaCategorias" hidden>
+    <header class="cabecera">
+      <div>
+        <h1>Categorías</h1>
+        <div id="catResumen" class="resumen">&nbsp;</div>
+      </div>
+      <div class="cab-der">
+        <span class="estado" data-estado role="status">Cambios guardados</span>
+        <button type="button" id="catNueva" class="btn btn-agregar">+ Nueva categoría</button>
+      </div>
+    </header>
+    <p class="ayuda" id="catAyuda">Arrastrá el agarre para cambiar el orden en que se ven en la tienda. El interruptor muestra u oculta la categoría entera. Tocá una categoría para ver sus productos.</p>
+    <div class="cat-grid" id="catGrid">
+      <section class="cat-col cat-lista-col" aria-label="Categorías">
+        <div class="cat-col-t">Categorías · orden en la tienda</div>
+        <div id="catLista"></div>
+      </section>
+      <section class="cat-col cat-det" aria-labelledby="catDetTitulo">
+        <div class="cat-det-cab">
+          <div>
+            <button type="button" id="catVolver" class="volver cat-volver">← Categorías</button>
+            <h2 id="catDetTitulo"></h2>
+            <div id="catDetSub" class="resumen"></div>
+          </div>
+          <button type="button" id="catEditarSel" class="btn btn-borde">Editar categoría</button>
+        </div>
+        <div id="catProds"></div>
+      </section>
+    </div>
+  </main>
+
   <!-- ═══ PEDIDOS ═══ -->
   <main class="principal" id="vistaPedidos" hidden>
     <header class="cabecera">
@@ -681,6 +757,7 @@
   <nav class="tabbar" aria-label="Secciones">
     <button class="tab activo" data-nav="lista" aria-current="page">Productos</button>
     <button class="tab" data-nav="nuevo">Agregar</button>
+    <button class="tab" data-nav="categorias">Categorías</button>
     <button class="tab" data-nav="pedidos">Pedidos <span class="tag" id="tabPedCont" hidden></span></button>
     <button class="tab" aria-disabled="true">Ajustes <span class="tag">pronto</span></button>
   </nav>
@@ -727,6 +804,47 @@
       <button type="button" id="deCancelar" class="btn btn-neutro">Cancelar</button>
       <button type="button" id="deOcultar" class="btn btn-borde-verde">Ocultar en vez</button>
       <button type="button" id="deConfirmar" class="btn btn-rojo">Sí, eliminar</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- ═══ VENTANA: CATEGORÍA ═══ -->
+<dialog id="dlgCategoria" class="dlg-ancho" aria-labelledby="dcTitulo">
+  <form id="formCategoria" class="dlg" novalidate>
+    <h2 id="dcTitulo">Nueva categoría</h2>
+    <label class="campo">Nombre
+      <input id="dcNombre" class="input" type="text" maxlength="60" autocomplete="off" placeholder="Ej: Frutos secos">
+    </label>
+    <div class="campo">Ícono
+      <div class="dc-icono">
+        <div class="cat-ico grande" id="dcIco"></div>
+        <button type="button" id="dcIcoBtn" class="btn btn-borde">Elegir ícono</button>
+        <button type="button" id="dcIcoQuitar" class="btn-texto" hidden>Quitar</button>
+      </div>
+      <input type="file" id="dcArchivo" accept="image/png,image/jpeg,image/webp" hidden>
+      <span class="pista">Es la imagen chiquita de la barra de categorías de la tienda. Mejor PNG sin fondo.</span>
+    </div>
+    <div id="dcError" class="msg-error" role="alert" hidden></div>
+    <div class="acciones">
+      <button type="button" id="dcEliminar" class="btn btn-peligro">Eliminar</button>
+      <button type="button" id="dcCancelar" class="btn btn-borde">Cancelar</button>
+      <button type="submit" id="dcGuardar" class="btn btn-primario">Guardar</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ═══ VENTANA: ELIMINAR CATEGORÍA ═══ -->
+<dialog id="dlgBorrarCat" class="dlg-ancho" aria-labelledby="dbcTitulo">
+  <div class="dlg">
+    <h2 id="dbcTitulo">¿Eliminar la categoría?</h2>
+    <p class="de-txt" id="dbcTexto"></p>
+    <label class="campo" id="dbcMoverCampo">Pasar sus productos a
+      <select id="dbcMover" class="input"></select>
+    </label>
+    <div id="dbcError" class="msg-error" role="alert" hidden></div>
+    <div class="acciones">
+      <button type="button" id="dbcCancelar" class="btn btn-neutro">Cancelar</button>
+      <button type="button" id="dbcConfirmar" class="btn btn-rojo">Sí, eliminar</button>
     </div>
   </div>
 </dialog>
@@ -809,7 +927,8 @@
    Lo único que hay que cambiar para usar este panel en otra tienda.
    ════════════════════════════════════════════════════════════════ */
 const CONFIG = {
-  tienda: 'En Tren Verde',   pedidos: false,   // true = muestra la pestaña Pedidos; false = pausada
+  tienda: 'En Tren Verde',
+  pedidos: false,   // true = muestra la pestaña Pedidos; false = pausada
   // Dirección del script de guardado del panel (termina en /exec):
   api: 'https://script.google.com/macros/s/AKfycbw-g5D9S2QcR6Kgk8xiWNLsXItPD4QQ9kn-FzWHvMNmiOunT4J2s9TIYapRhPRyBq_rcA/exec'
 };
@@ -904,11 +1023,12 @@ const CONFIG = {
     pintarEstado();
   }
   function pintarEstado() {
-    const e = $('#estado');
-    e.className = 'estado';
-    if (pendientes) { e.classList.add('guardando'); e.textContent = 'Guardando…'; }
-    else if (huboError) { e.classList.add('error'); e.textContent = 'No se pudo guardar'; }
-    else e.textContent = 'Cambios guardados';
+    document.querySelectorAll('[data-estado]').forEach(e => {
+      e.className = 'estado';
+      if (pendientes) { e.classList.add('guardando'); e.textContent = 'Guardando…'; }
+      else if (huboError) { e.classList.add('error'); e.textContent = 'No se pudo guardar'; }
+      else e.textContent = 'Cambios guardados';
+    });
   }
   window.addEventListener('beforeunload', e => { if (pendientes || hayCambios()) { e.preventDefault(); e.returnValue = ''; } });
 
@@ -972,6 +1092,7 @@ const CONFIG = {
     let ultima = '';
     try { ultima = localStorage.getItem('panel_vista') || ''; } catch (e) {}
     if (ultima === 'pedidos' && CONFIG.pedidos) { mostrarVista('pedidos'); renderPedidos(); }
+    if (ultima === 'categorias') mostrarVista('categorias');
     cargarPedidos(true);
   }
 
@@ -981,6 +1102,7 @@ const CONFIG = {
       datos = await api('listar');
       llenarCategorias();
       render();
+      if (!$('#vistaCategorias').hidden) renderCats();
       pintarEstado();
     } catch (e) {
       if (e.codigo === 'auth') return;
@@ -1219,7 +1341,8 @@ const CONFIG = {
     $('#vistaLista').hidden = v !== 'lista';
     $('#vistaForm').hidden = v !== 'form';
     $('#vistaPedidos').hidden = v !== 'pedidos';
-    const nav = v === 'pedidos' ? 'pedidos' : (v === 'form' && form && form.modo === 'nuevo' ? 'nuevo' : 'lista');
+    $('#vistaCategorias').hidden = v !== 'categorias';
+    const nav = v === 'pedidos' || v === 'categorias' ? v : (v === 'form' && form && form.modo === 'nuevo' ? 'nuevo' : 'lista');
     document.querySelectorAll('.nav-item[data-nav], .tab[data-nav]').forEach(b => {
       const act = b.dataset.nav === nav;
       b.classList.toggle('activo', act);
@@ -1232,6 +1355,7 @@ const CONFIG = {
     const n = b.dataset.nav;
     if (n === 'nuevo') abrirForm(null);
     else if (n === 'pedidos') irPedidos();
+    else if (n === 'categorias') irCategorias();
     else irLista();
   }));
 
@@ -1239,6 +1363,15 @@ const CONFIG = {
   function irLista() {
     recordarVista('lista');
     if (formAbierto()) salirForm(); else mostrarVista('lista');
+  }
+  function irCategorias() {
+    if (formAbierto()) {
+      if (hayCambios() && !confirm(PREGUNTA_DESCARTAR)) return;
+      salirForm(true);
+    }
+    recordarVista('categorias');
+    mostrarVista('categorias');
+    renderCats();
   }
   function irPedidos() {
     if (formAbierto()) {
@@ -1704,6 +1837,326 @@ const CONFIG = {
     } finally {
       btns.forEach(b => { b.disabled = false; });
       $('#deConfirmar').textContent = 'Sí, eliminar';
+    }
+  });
+
+  // ═══════════════ CATEGORÍAS ═══════════════
+  let catSel = '';
+  let sortCats = null;
+  let sortProds = null;
+  let dc = null;   // ventana de categoría: { id, icono: { url, nueva } }
+  const visibleCat = c => String(c.activo == null ? '' : c.activo).trim().toUpperCase() !== 'NO';
+  const catsOrdenadas = () => datos.categorias.slice().sort((a, b) => num(a.orden) - num(b.orden));
+  const prodsDe = id => datos.productos.filter(p => String(p.categoria_id) === String(id));
+  const nProductos = n => n + (n === 1 ? ' producto' : ' productos');
+
+  function icoHTML(c, tam) {
+    const src = miniatura(c.icono_url, tam || 120);
+    return esc((String(c.nombre || '?').trim().charAt(0) || '?').toUpperCase()) + (src ? '<img src="' + esc(src) + '" alt="" loading="lazy" onerror="this.remove()">' : '');
+  }
+
+  function renderCats() {
+    const cats = catsOrdenadas();
+    if (!cats.some(c => String(c.id) === catSel)) catSel = cats.length && !enCelu() ? String(cats[0].id) : '';
+    const ocultas = cats.filter(c => !visibleCat(c)).length;
+    $('#catResumen').textContent = cats.length + ' categorías' + (ocultas ? ' · ' + ocultas + (ocultas === 1 ? ' oculta' : ' ocultas') : '') + ' · ' + datos.productos.length + ' productos';
+    $('#catLista').innerHTML = cats.length ? cats.map(c => {
+      const id = String(c.id);
+      const vis = visibleCat(c);
+      const n = prodsDe(id).length;
+      return '<div class="cat-item' + (id === catSel ? ' sel' : '') + (vis ? '' : ' oculta') + '" data-cat="' + esc(id) + '">' +
+        '<button type="button" class="grip" aria-label="Arrastrar para ordenar: ' + esc(c.nombre) + '">' + GRIP + '</button>' +
+        '<button type="button" class="cat-abrir" data-acc="abrir"' + (id === catSel ? ' aria-current="true"' : '') + '><span class="cat-ico" aria-hidden="true">' + icoHTML(c) + '</span>' +
+        '<span class="cat-txt"><b>' + esc(c.nombre) + '</b><small>' + nProductos(n) + (vis ? '' : ' · <span class="badge">Oculta</span>') + '</small></span></button>' +
+        '<label class="tg" title="Visible en la tienda"><input type="checkbox" class="sw" data-acc="visible"' + (vis ? ' checked' : '') + ' aria-label="Visible en la tienda: ' + esc(c.nombre) + '"></label>' +
+        '<button type="button" class="btn-mini" data-acc="editar" aria-label="Editar ' + esc(c.nombre) + '">Editar</button>' +
+        '</div>';
+    }).join('') : '<div class="vacio">Todavía no hay categorías.</div>';
+
+    if (sortCats) { sortCats.destroy(); sortCats = null; }
+    if (window.Sortable && cats.length > 1) {
+      sortCats = Sortable.create($('#catLista'), {
+        handle: '.grip', draggable: '.cat-item', forceFallback: true, fallbackTolerance: 3, animation: 150,
+        ghostClass: 'sortable-ghost', chosenClass: 'sortable-chosen', onEnd: soltarCategoria
+      });
+    }
+    renderProdsCat();
+  }
+
+  function renderProdsCat() {
+    const c = datos.categorias.find(x => String(x.id) === catSel);
+    $('#catGrid').classList.toggle('detalle', !!c && enCelu());
+    $('#catEditarSel').hidden = !c;
+    if (sortProds) { sortProds.destroy(); sortProds = null; }
+    if (!c) {
+      $('#catDetTitulo').textContent = 'Elegí una categoría';
+      $('#catDetSub').textContent = '';
+      $('#catProds').innerHTML = '';
+      return;
+    }
+    const ps = prodsDe(c.id);
+    $('#catDetTitulo').textContent = c.nombre;
+    $('#catDetSub').textContent = nProductos(ps.length) + (visibleCat(c) ? '' : ' · categoría oculta en la tienda') +
+      (ps.length > 1 ? ' · arrastrá para ordenar' + (enCelu() ? '' : ', o soltalo sobre otra categoría para pasarlo') : '');
+    const otras = catsOrdenadas().filter(x => String(x.id) !== String(c.id));
+    const opciones = '<option value="">Mover a…</option>' + otras.map(x => '<option value="' + esc(x.id) + '">' + esc(x.nombre) + '</option>').join('');
+    $('#catProds').innerHTML = ps.length ? ps.map(p => {
+      const src = miniatura(p.foto_url);
+      const visible = SI(p.activo);
+      return '<div class="cp-fila' + (visible ? '' : ' oculto') + '" data-id="' + esc(p.id) + '">' +
+        '<button type="button" class="grip" aria-label="Arrastrar: ' + esc(p.nombre) + '"' + (ps.length > 1 || otras.length ? '' : ' disabled') + '>' + GRIP + '</button>' +
+        '<div class="foto" aria-hidden="true">' + esc((String(p.nombre || '?').charAt(0) || '?').toUpperCase()) + (src ? '<img src="' + esc(src) + '" alt="" loading="lazy">' : '') + '</div>' +
+        '<div class="info"><div class="nombre">' + esc(p.nombre) + (visible ? '' : '<span class="badge">Oculto</span>') + (SI(p.stock) ? '' : '<span class="badge">Sin stock</span>') + '</div>' +
+        '<div class="meta">' + esc(p.marca || 'Sin marca') + '</div></div>' +
+        '<label class="cp-mover"><span class="sr">Pasar ' + esc(p.nombre) + ' a otra categoría</span><select data-acc="mover"' + (otras.length ? '' : ' disabled') + '>' + opciones + '</select></label>' +
+        '</div>';
+    }).join('') : '<div class="vacio">Esta categoría no tiene productos.<br>Podés pasar productos acá con "Mover a…" desde otra categoría.</div>';
+
+    if (window.Sortable && ps.length) {
+      sortProds = Sortable.create($('#catProds'), {
+        handle: '.grip', draggable: '.cp-fila', forceFallback: true, fallbackTolerance: 3, animation: 150,
+        ghostClass: 'sortable-ghost', chosenClass: 'sortable-chosen',
+        onStart: () => { document.addEventListener('pointermove', seguirPuntero); document.addEventListener('touchmove', seguirPuntero, { passive: true }); },
+        onEnd: soltarProducto
+      });
+    }
+  }
+
+  // Mientras se arrastra un producto: ¿está encima de otra categoría?
+  let destinoCat = '';
+  function seguirPuntero(e) {
+    const pt = e.touches ? e.touches[0] : e;
+    if (!pt) return;
+    const el = document.elementFromPoint(pt.clientX, pt.clientY);
+    const item = el && el.closest('#catLista .cat-item');
+    const id = item && item.dataset.cat !== catSel ? item.dataset.cat : '';
+    if (id === destinoCat) return;
+    destinoCat = id;
+    document.querySelectorAll('#catLista .cat-item.destino').forEach(x => x.classList.remove('destino'));
+    if (item && id) item.classList.add('destino');
+  }
+
+  async function soltarProducto(ev) {
+    document.removeEventListener('pointermove', seguirPuntero);
+    document.removeEventListener('touchmove', seguirPuntero);
+    document.querySelectorAll('#catLista .cat-item.destino').forEach(x => x.classList.remove('destino'));
+    const destino = destinoCat;
+    destinoCat = '';
+    const pid = ev.item && ev.item.dataset.id;
+    if (destino && pid) { renderProdsCat(); moverA(pid, destino); return; }
+    const ids = Array.from($('#catProds').querySelectorAll('.cp-fila')).map(el => el.dataset.id);
+    let k = 0;
+    const nuevo = datos.productos.map(p => String(p.categoria_id) === catSel ? ids[k++] : String(p.id));
+    const antes = datos.productos.map(p => String(p.id));
+    if (nuevo.join('|') === antes.join('|')) return;
+    const porId = {};
+    datos.productos.forEach(p => { porId[String(p.id)] = p; });
+    const anterior = datos.productos;
+    datos.productos = nuevo.map(id => porId[id]);
+    empezar();
+    try {
+      await api('reordenar', { ids: nuevo });
+      terminar(true);
+      render();
+    } catch (e) {
+      datos.productos = anterior;
+      if (e.codigo !== 'auth') { terminar(false, e.message); renderProdsCat(); } else terminar(false, '', true);
+    }
+  }
+
+  async function soltarCategoria() {
+    const ids = Array.from($('#catLista').querySelectorAll('.cat-item')).map(el => el.dataset.cat);
+    const antes = catsOrdenadas().map(c => String(c.id));
+    if (ids.join('|') === antes.join('|')) return;
+    const guardado = datos.categorias.map(c => c.orden);
+    ids.forEach((id, k) => { const c = datos.categorias.find(x => String(x.id) === id); if (c) c.orden = k + 1; });
+    empezar();
+    try {
+      await api('reordenarCategorias', { ids: ids });
+      terminar(true);
+      llenarCategorias();
+    } catch (e) {
+      datos.categorias.forEach((c, i) => { c.orden = guardado[i]; });
+      if (e.codigo !== 'auth') terminar(false, e.message); else terminar(false, '', true);
+      renderCats();
+    }
+  }
+
+  async function moverA(pid, catId) {
+    const p = prod(pid);
+    const c = datos.categorias.find(x => String(x.id) === String(catId));
+    if (!p || !c) return;
+    const antes = p.categoria_id;
+    p.categoria_id = isNaN(Number(catId)) ? catId : Number(catId);
+    renderCats();
+    empezar();
+    try {
+      await api('moverProducto', { id: String(p.id), categoria_id: String(catId) });
+      terminar(true);
+      aviso('"' + p.nombre + '" pasó a ' + c.nombre + ' ✓');
+      render();
+    } catch (e) {
+      p.categoria_id = antes;
+      if (e.codigo !== 'auth') terminar(false, e.message); else terminar(false, '', true);
+      renderCats();
+    }
+  }
+
+  async function cambiarVisibleCat(id, visible, input) {
+    const c = datos.categorias.find(x => String(x.id) === String(id));
+    if (!c) return;
+    const antes = c.activo;
+    c.activo = visible ? 'SI' : 'NO';
+    input.disabled = true;
+    empezar();
+    try {
+      await api('categoriaVisible', { id: String(id), visible: visible });
+      terminar(true);
+    } catch (e) {
+      c.activo = antes;
+      if (e.codigo !== 'auth') terminar(false, e.message); else terminar(false, '', true);
+    } finally {
+      renderCats();
+    }
+  }
+
+  $('#catLista').addEventListener('click', e => {
+    const item = e.target.closest('.cat-item');
+    if (!item) return;
+    const acc = e.target.closest('[data-acc]');
+    if (!acc) return;
+    if (acc.dataset.acc === 'abrir') { catSel = item.dataset.cat; renderCats(); if (enCelu()) window.scrollTo(0, 0); }
+    if (acc.dataset.acc === 'editar') abrirCategoria(item.dataset.cat);
+  });
+  $('#catLista').addEventListener('change', e => {
+    if (e.target.matches('input[data-acc="visible"]')) cambiarVisibleCat(e.target.closest('.cat-item').dataset.cat, e.target.checked, e.target);
+  });
+  $('#catProds').addEventListener('change', e => {
+    if (!e.target.matches('select[data-acc="mover"]') || !e.target.value) return;
+    moverA(e.target.closest('.cp-fila').dataset.id, e.target.value);
+  });
+  $('#catVolver').addEventListener('click', () => { catSel = ''; renderCats(); });
+  $('#catEditarSel').addEventListener('click', () => abrirCategoria(catSel));
+  $('#catNueva').addEventListener('click', () => abrirCategoria(null));
+
+  // ─── Ventana de categoría ───
+  function pintarIcono() {
+    const src = dc.icono.nueva || (dc.icono.url ? miniatura(dc.icono.url, 200) : '');
+    const letra = esc(($('#dcNombre').value.trim().charAt(0) || '+').toUpperCase());
+    $('#dcIco').innerHTML = letra + (src ? '<img src="' + esc(src) + '" alt="" onerror="this.remove()">' : '');
+    $('#dcIcoBtn').textContent = src ? 'Cambiar ícono' : 'Elegir ícono';
+    $('#dcIcoQuitar').hidden = !src;
+  }
+
+  function abrirCategoria(id) {
+    const c = id == null ? null : datos.categorias.find(x => String(x.id) === String(id));
+    if (id != null && !c) return;
+    dc = { id: c ? String(c.id) : '', icono: { url: c ? String(c.icono_url || '').trim() : '', nueva: null } };
+    $('#dcTitulo').textContent = c ? 'Editar categoría' : 'Nueva categoría';
+    $('#dcNombre').value = c ? c.nombre : '';
+    $('#dcEliminar').hidden = !c;
+    $('#dcGuardar').textContent = c ? 'Guardar' : 'Crear categoría';
+    $('#dcError').hidden = true;
+    pintarIcono();
+    $('#dlgCategoria').showModal();
+    $('#dcNombre').focus();
+  }
+
+  $('#dcNombre').addEventListener('input', () => { if (dc) pintarIcono(); });
+  $('#dcIcoBtn').addEventListener('click', () => $('#dcArchivo').click());
+  $('#dcIcoQuitar').addEventListener('click', () => { dc.icono = { url: '', nueva: null }; pintarIcono(); });
+  $('#dcArchivo').addEventListener('change', async e => {
+    const f = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if (!f) return;
+    if (!/^image\/(png|jpeg|webp)$/.test(f.type)) { aviso('Usá una imagen PNG, JPG o WEBP.'); return; }
+    try { dc.icono.nueva = await achicar(f); pintarIcono(); } catch (err) { aviso('No pude leer esa imagen. Probá con otra.'); }
+  });
+  $('#dcCancelar').addEventListener('click', () => $('#dlgCategoria').close());
+
+  $('#formCategoria').addEventListener('submit', async ev => {
+    ev.preventDefault();
+    if (!dc) return;
+    const err = $('#dcError');
+    const nombre = $('#dcNombre').value.trim();
+    if (!nombre) { err.textContent = 'Escribí el nombre de la categoría.'; err.hidden = false; $('#dcNombre').focus(); return; }
+    const btn = $('#dcGuardar');
+    const texto = btn.textContent;
+    document.querySelectorAll('#formCategoria .acciones button').forEach(b => { b.disabled = true; });
+    err.hidden = true;
+    empezar();
+    try {
+      if (dc.icono.nueva) {
+        btn.textContent = 'Subiendo ícono…';
+        const f = await api('subirFoto', { base64: dc.icono.nueva, nombre: 'Categoría ' + nombre });
+        dc.icono = { url: f.url, nueva: null };
+      }
+      btn.textContent = 'Guardando…';
+      const r = await api('guardarCategoria', { id: dc.id, nombre: nombre, icono_url: dc.icono.url });
+      const i = datos.categorias.findIndex(x => String(x.id) === String(r.id));
+      if (i >= 0) datos.categorias[i] = r; else datos.categorias.push(r);
+      terminar(true);
+      $('#dlgCategoria').close();
+      if (!dc.id) catSel = String(r.id);
+      aviso(dc.id ? 'Categoría guardada ✓' : 'Categoría "' + r.nombre + '" creada ✓');
+      dc = null;
+      llenarCategorias();
+      renderCats();
+      render();
+    } catch (e) {
+      terminar(false, '', true);
+      if (e.codigo !== 'auth') { err.textContent = e.message; err.hidden = false; } else $('#dlgCategoria').close();
+    } finally {
+      document.querySelectorAll('#formCategoria .acciones button').forEach(b => { b.disabled = false; });
+      btn.textContent = texto;
+    }
+  });
+
+  // ─── Eliminar categoría ───
+  let aBorrarCat = '';
+  $('#dcEliminar').addEventListener('click', () => {
+    if (!dc || !dc.id) return;
+    const c = datos.categorias.find(x => String(x.id) === dc.id);
+    if (!c) return;
+    aBorrarCat = dc.id;
+    $('#dlgCategoria').close();
+    const n = prodsDe(c.id).length;
+    const otras = catsOrdenadas().filter(x => String(x.id) !== String(c.id));
+    $('#dbcTitulo').textContent = '¿Eliminar "' + c.nombre + '"?';
+    $('#dbcTexto').textContent = n
+      ? 'Tiene ' + nProductos(n) + '. No se borran: pasan a la categoría que elijas. Queda una copia de la categoría en la pestaña "papelera" del Sheet.'
+      : 'No tiene productos. Queda una copia en la pestaña "papelera" del Sheet, por si hay que recuperarla.';
+    $('#dbcMoverCampo').hidden = !n;
+    $('#dbcMover').innerHTML = '<option value="">Elegí una categoría</option>' + otras.map(x => '<option value="' + esc(x.id) + '">' + esc(x.nombre) + '</option>').join('');
+    $('#dbcError').hidden = true;
+    $('#dbcConfirmar').disabled = !!n && !otras.length;
+    $('#dlgBorrarCat').showModal();
+    $('#dbcCancelar').focus();
+  });
+  $('#dbcCancelar').addEventListener('click', () => $('#dlgBorrarCat').close());
+  $('#dbcConfirmar').addEventListener('click', async () => {
+    const c = datos.categorias.find(x => String(x.id) === aBorrarCat);
+    if (!c) return;
+    const n = prodsDe(c.id).length;
+    const destino = $('#dbcMover').value;
+    if (n && !destino) { $('#dbcError').textContent = 'Elegí a qué categoría pasar sus productos.'; $('#dbcError').hidden = false; return; }
+    const btns = document.querySelectorAll('#dlgBorrarCat button');
+    btns.forEach(b => { b.disabled = true; });
+    $('#dbcConfirmar').textContent = 'Eliminando…';
+    empezar();
+    try {
+      await api('eliminarCategoria', { id: aBorrarCat, moverA: destino });
+      terminar(true);
+      $('#dlgBorrarCat').close();
+      aviso('Categoría eliminada' + (n ? '. Sus productos pasaron a ' + (datos.categorias.find(x => String(x.id) === destino) || {}).nombre + '.' : '.'));
+      catSel = destino || '';
+      cargar();
+    } catch (e) {
+      terminar(false, '', true);
+      if (e.codigo !== 'auth') { $('#dbcError').textContent = e.message; $('#dbcError').hidden = false; } else $('#dlgBorrarCat').close();
+    } finally {
+      btns.forEach(b => { b.disabled = false; });
+      $('#dbcConfirmar').textContent = 'Sí, eliminar';
     }
   });
 
@@ -2233,7 +2686,8 @@ const CONFIG = {
   }));
 
   // ─── Inicio ───
-  document.title = 'Panel · ' + CONFIG.tienda;   if (!CONFIG.pedidos) document.querySelectorAll('[data-nav="pedidos"]').forEach(b => b.remove());
+  document.title = 'Panel · ' + CONFIG.tienda;
+  if (!CONFIG.pedidos) document.querySelectorAll('[data-nav="pedidos"]').forEach(b => b.remove());
   document.querySelectorAll('[data-tienda]').forEach(el => { el.textContent = CONFIG.tienda; });
   if (token) entrar(); else mostrarLogin();
 })();

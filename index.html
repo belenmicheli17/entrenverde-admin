@@ -1135,7 +1135,7 @@ const CONFIG = {
     });
   }
 
-  : 'Para cambiar el orden, dejá el filtro en "Todos" y sin texto en el buscador.';
+  const puedeOrdenar = () => filtro.tipo === 'todos' && !filtro.texto.trim();
 
   function actualizarResumen() {
     const ps = datos.productos;
@@ -1178,7 +1178,7 @@ const CONFIG = {
     const orden = puedeOrdenar();
     $('#ayudaOrden').textContent = orden
       ? 'Arrastrá el agarre de la izquierda para cambiar el orden en la tienda.'
-      : 'Para cambiar el orden, elegí una categoría y dejá el filtro en "Todos".';
+      : 'Para cambiar el orden, dejá el filtro en "Todos" y sin texto en el buscador.';
 
     if (sortable) { sortable.destroy(); sortable = null; }
     const lista = visibles();

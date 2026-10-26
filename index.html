@@ -1135,7 +1135,7 @@ const CONFIG = {
     });
   }
 
-  const puedeOrdenar = () => !!filtro.cat && filtro.tipo === 'todos' && !filtro.texto.trim();
+  : 'Para cambiar el orden, dejá el filtro en "Todos" y sin texto en el buscador.';
 
   function actualizarResumen() {
     const ps = datos.productos;
@@ -1311,7 +1311,7 @@ const CONFIG = {
   async function alSoltar() {
     const idsCat = Array.from($('#lista').querySelectorAll('.fila')).map(el => el.dataset.id);
     let k = 0;
-    const nuevo = datos.productos.map(p => String(p.categoria_id) === filtro.cat ? idsCat[k++] : String(p.id));
+    const nuevo = filtro.cat ? datos.productos.map(p => String(p.categoria_id) === filtro.cat ? idsCat[k++] : String(p.id)) : idsCat;
     const antes = datos.productos.map(p => String(p.id));
     if (nuevo.join('|') === antes.join('|')) return;
 

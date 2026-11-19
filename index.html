@@ -105,11 +105,14 @@
   .ayuda { font-size: 13px; color: var(--texto-suave); margin: 0; line-height: 1.5; }
 
   .tabla { background: var(--crema-card); border: 1px solid var(--borde); border-radius: 14px; overflow-x: auto; }
-  .tabla-inner { min-width: 860px; }
-  .fila { display: grid; grid-template-columns: 24px 56px minmax(150px, 1fr) minmax(200px, 1.6fr) 72px 72px 72px 76px; gap: 12px; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--borde-suave); background: var(--crema-card); }
+  .tabla-inner { min-width: 944px; }
+  .fila { display: grid; grid-template-columns: 24px 56px minmax(150px, 1fr) minmax(200px, 1.6fr) 72px 72px 72px 84px 76px; gap: 12px; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--borde-suave); background: var(--crema-card); }
   #lista .fila:last-child { border-bottom: 0; }
   .fila.encabezado { border-bottom: 1px solid var(--borde); font-size: 12px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase; letter-spacing: .04em; line-height: 1.25; }
   .fila.encabezado .c { text-align: center; }
+  /* Títulos fijos al bajar: la tabla deja de ser caja con scroll propio cuando entra entera */
+  .fila.encabezado { position: sticky; top: 0; z-index: 3; border-radius: 14px 14px 0 0; box-shadow: 0 1px 0 var(--borde); }
+  @media (min-width: 1240px) { .tabla { overflow: visible; } }
   .fila.oculto .info, .fila.oculto .foto { opacity: .55; }
   .grip { width: 24px; height: 44px; padding: 0; border: 0; background: transparent; cursor: grab; display: flex; align-items: center; justify-content: center; touch-action: none; }
   .grip:disabled { cursor: default; opacity: .3; }
@@ -583,7 +586,7 @@
       <div class="tabla-inner">
         <div class="fila encabezado" aria-hidden="true">
           <div></div><div></div><div>Producto</div><div>Variantes y precios</div>
-          <div class="c">En stock</div><div class="c">Visible</div><div class="c">Más vendido</div><div></div>
+          <div class="c">En stock</div><div class="c">Visible</div><div class="c">Más vendido</div><div class="c">Bebida alcohólica</div><div></div>
         </div>
         <div id="lista"></div>
       </div>
@@ -676,6 +679,7 @@
           <label class="f-sw"><input id="fStock" type="checkbox" class="sw"> En stock</label>
           <label class="f-sw"><input id="fVisible" type="checkbox" class="sw"> Visible en la tienda</label>
           <label class="f-sw"><input id="fTop" type="checkbox" class="sw"> Más vendido</label>
+          <label class="f-sw"><input id="fAlcohol" type="checkbox" class="sw"> Bebida alcohólica</label>
         </section>
 
         <div id="fError" class="msg-error" role="alert" hidden></div>
@@ -1168,7 +1172,7 @@ const CONFIG = {
       '<div class="info"><div class="nombre">' + nombre + (visible ? '' : '<span class="badge">Oculto</span>') + '</div>' +
       '<div class="meta">' + esc(p.marca || 'Sin marca') + ' · ' + esc(catNombre(p.categoria_id)) + '</div></div>' +
       '<div class="vars">' + chips + '</div>' +
-      '<div class="toggles">' + tg('stock', 'Stock', p.stock) + tg('activo', 'Visible', p.activo) + tg('mas_vendidos', 'Más vendido', p.mas_vendidos) + '</div>' +
+      '<div class="toggles">' + tg('stock', 'Stock', p.stock) + tg('activo', 'Visible', p.activo) + tg('mas_vendidos', 'Más vendido', p.mas_vendidos) + tg('alcohol', 'Alcohol', p.alcohol) + '</div>' +
       '<div class="celda-editar"><button type="button" class="btn-editar" aria-label="Editar ' + nombre + '">Editar</button></div>' +
       '</div>';
   }
@@ -1430,6 +1434,7 @@ const CONFIG = {
     $('#fStock').checked = p ? SI(p.stock) : true;
     $('#fVisible').checked = p ? SI(p.activo) : true;
     $('#fTop').checked = p ? SI(p.mas_vendidos) : false;
+    $('#fAlcohol').checked = p ? SI(p.alcohol) : false;
 
     $('#fVars').innerHTML = '';
     if (vs.length) {
@@ -1465,7 +1470,7 @@ const CONFIG = {
   function estadoForm() {
     return JSON.stringify([
       $('#fNombre').value.trim(), $('#fMarca').value.trim(), $('#fCategoria').value, $('#fDesc').value.trim(), $('#fAceite').value.trim(),
-      $('#fStock').checked, $('#fVisible').checked, $('#fTop').checked,
+      $('#fStock').checked, $('#fVisible').checked, $('#fTop').checked, $('#fAlcohol').checked,
       form ? form.foto.url : '', form && form.foto.nueva ? form.foto.nueva.length : 0,
       leerVars()
     ]);
@@ -1740,7 +1745,8 @@ const CONFIG = {
         foto_url: form.foto.url,
         stock: $('#fStock').checked,
         activo: $('#fVisible').checked,
-        mas_vendidos: $('#fTop').checked
+        mas_vendidos: $('#fTop').checked,
+        alcohol: $('#fAlcohol').checked
       };
       if (!$('#campoAceite').hidden) producto.marca_aceite = $('#fAceite').value.trim();
       await api('guardarProducto', { producto: producto, variantes: leerVars() });

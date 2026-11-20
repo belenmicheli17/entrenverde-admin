@@ -83,6 +83,10 @@
   .tag { font-size: 11px; background: var(--mostaza); color: var(--texto); border-radius: 6px; padding: 2px 7px; font-weight: 600; }
   .lateral .espacio { flex: 1; }
   .lateral .salir { font-size: 14px; opacity: .85; }
+  .lateral .ir-tienda { text-decoration: none; border: 1px solid rgba(245,240,232,.35); justify-content: space-between; margin-bottom: 4px; }
+  .lateral .ir-tienda:hover { background: rgba(255,255,255,.1); }
+  .lateral .ir-tienda svg { opacity: .85; }
+  .ir-tienda-m { display: inline-flex; align-items: center; gap: 6px; color: inherit; text-decoration: none; font-size: 14px; margin-left: auto; margin-right: 14px; }
 
   .topbar-m { display: none; }
   .principal { flex: 1; min-width: 0; padding: 32px 40px 48px; display: flex; flex-direction: column; gap: 22px; }
@@ -543,11 +547,13 @@
     <button class="nav-item" data-nav="pedidos">Pedidos <span class="nav-cont" id="navPedCont" hidden></span></button>
     <button class="nav-item" aria-disabled="true" title="Llega más adelante">Ajustes <span class="tag">pronto</span></button>
     <div class="espacio"></div>
+    <a class="nav-item ir-tienda" href="https://entrenverde.com.ar" target="_blank" rel="noopener">Ir a la tienda <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a>
     <button class="nav-item salir" data-salir>Cerrar sesión</button>
   </nav>
 
   <div class="topbar-m">
     <span class="marca" data-tienda></span>
+    <a class="ir-tienda-m" href="https://entrenverde.com.ar" target="_blank" rel="noopener" aria-label="Ir a la tienda">Tienda <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a>
     <button data-salir>Salir</button>
   </div>
 
